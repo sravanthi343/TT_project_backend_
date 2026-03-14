@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>CMS API Reference</title>
+<style>
+  :root {
+    --bg: #0d1117;
+    --surface: #161b22;
+    --border: #30363d;
+    --accent: #58a6ff;
+    --green: #3fb950;
+    --yellow: #d29922;
+    --red: #f85149;
+    --purple: #bc8cff;
+    --orange: #ffa657;
+    --text: #c9d1d9;
+    --muted: #8b949e;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', sans-serif; line-height: 1.6; }
+  header { background: var(--surface); border-bottom: 1px solid var(--border); padding: 24px 40px; }
+  header h1 { font-size: 1.5rem; color: var(--accent); }
+  header p { color: var(--muted); font-size: 0.9rem; margin-top: 4px; }
+  .container { max-width: 900px; margin: 0 auto; padding: 40px 20px; }
+  .base-url { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 16px 20px; margin-bottom: 32px; font-family: monospace; font-size: 0.95rem; }
+  .base-url span { color: var(--accent); }
+  h2 { font-size: 1.1rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; margin: 32px 0 16px; border-bottom: 1px solid var(--border); padding-bottom: 8px; }
+  .endpoint { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; margin-bottom: 10px; overflow: hidden; }
+  .endpoint-header { display: flex; align-items: center; gap: 14px; padding: 14px 18px; }
+  .method { font-family: monospace; font-weight: 700; font-size: 0.78rem; padding: 3px 8px; border-radius: 4px; min-width: 56px; text-align: center; }
+  .GET    { background: #1f4068; color: var(--accent); }
+  .POST   { background: #1a3a2a; color: var(--green); }
+  .PUT    { background: #3a2e10; color: var(--yellow); }
+  .PATCH  { background: #2e1e3a; color: var(--purple); }
+  .DELETE { background: #3a1a1a; color: var(--red); }
+  .path   { font-family: monospace; font-size: 0.9rem; color: var(--text); }
+  .desc   { margin-left: auto; font-size: 0.82rem; color: var(--muted); }
+  footer { text-align: center; padding: 40px; color: var(--muted); font-size: 0.82rem; border-top: 1px solid var(--border); }
+</style>
+</head>
+<body>
+<header>
+  <h1>⚡ CMS API Reference</h1>
+  <p>Complaint Management System · Spring Boot REST API</p>
+</header>
+<div class="container">
+
+  <div class="base-url">Base URL: <span>http://localhost:8080/api/complaints</span></div>
+
+  <h2>📋 Core CRUD</h2>
+  <div class="endpoint"><div class="endpoint-header"><span class="method GET">GET</span><span class="path">/</span><span class="desc">List all complaints (paginated)</span></div></div>
+  <div class="endpoint"><div class="endpoint-header"><span class="method POST">POST</span><span class="path">/</span><span class="desc">Create a new complaint</span></div></div>
+  <div class="endpoint"><div class="endpoint-header"><span class="method GET">GET</span><span class="path">/{id}</span><span class="desc">Get complaint by ID</span></div></div>
+  <div class="endpoint"><div class="endpoint-header"><span class="method PUT">PUT</span><span class="path">/{id}</span><span class="desc">Update complaint details</span></div></div>
+  <div class="endpoint"><div class="endpoint-header"><span class="method DELETE">DELETE</span><span class="path">/{id}</span><span class="desc">Delete a complaint</span></div></div>
+
+  <h2>🔍 Filtering</h2>
+  <div class="endpoint"><div class="endpoint-header"><span class="method GET">GET</span><span class="path">/status/{status}</span><span class="desc">OPEN · IN_PROGRESS · RESOLVED · CLOSED · REJECTED</span></div></div>
+  <div class="endpoint"><div class="endpoint-header"><span class="method GET">GET</span><span class="path">/category/{category}</span><span class="desc">PRODUCT · SERVICE · BILLING · TECHNICAL · OTHER</span></div></div>
+  <div class="endpoint"><div class="endpoint-header"><span class="method GET">GET</span><span class="path">/priority/{priority}</span><span class="desc">LOW · MEDIUM · HIGH · CRITICAL</span></div></div>
+  <div class="endpoint"><div class="endpoint-header"><span class="method GET">GET</span><span class="path">/email/{email}</span><span class="desc">All complaints by email</span></div></div>
+  <div class="endpoint"><div class="endpoint-header"><span class="method GET">GET</span><span class="path">/search?keyword=</span><span class="desc">Full-text search (title, description, name)</span></div></div>
+
+  <h2>⚡ Patch Actions</h2>
+  <div class="endpoint"><div class="endpoint-header"><span class="method PATCH">PATCH</span><span class="path">/{id}/status?status=&resolutionNote=</span><span class="desc">Update status</span></div></div>
+  <div class="endpoint"><div class="endpoint-header"><span class="method PATCH">PATCH</span><span class="path">/{id}/priority?priority=</span><span class="desc">Update priority</span></div></div>
+
+  <h2>📊 Analytics</h2>
+  <div class="endpoint"><div class="endpoint-header"><span class="method GET">GET</span><span class="path">/stats</span><span class="desc">Dashboard statistics</span></div></div>
+  <div class="endpoint"><div class="endpoint-header"><span class="method GET">GET</span><span class="path">/urgent</span><span class="desc">HIGH + CRITICAL open complaints</span></div></div>
+  <div class="endpoint"><div class="endpoint-header"><span class="method GET">GET</span><span class="path">/recent?limit=5</span><span class="desc">Most recent N complaints</span></div></div>
+  <div class="endpoint"><div class="endpoint-header"><span class="method GET">GET</span><span class="path">/date-range?start=&end=</span><span class="desc">Filter by date range (ISO 8601)</span></div></div>
+
+  <h2>🔧 Dev Tools</h2>
+  <div class="endpoint"><div class="endpoint-header"><span class="method GET">GET</span><span class="path" style="color:var(--orange)">/h2-console</span><span class="desc">H2 Database Console (dev only)</span></div></div>
+  <div class="endpoint"><div class="endpoint-header"><span class="method GET">GET</span><span class="path" style="color:var(--orange)">/actuator/health</span><span class="desc">Health check</span></div></div>
+
+</div>
+<footer>Complaint Management System · Spring Boot 3.2 · Java 17</footer>
+</body>
+</html>

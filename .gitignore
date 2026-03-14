@@ -1,0 +1,16 @@
+# Maven build output
+target/
+
+# H2 database files — generated at runtime, should not be committed
+data/*.mv.db
+data/*.trace.db
+
+# IDE files
+.idea/
+*.iml
+.vscode/
+*.class
+
+# OS files
+.DS_Store
+Thumbs.db
